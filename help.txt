@@ -1,0 +1,16 @@
+https://zhuanlan.zhihu.com/p/1009050689
+https://1nfinite.ai/t/triton-kernel-performance-on-risc-v-cpu/156
+
+我们在 X86 平台选择采用交叉编译方案编译 RISC-V 的可执行文件。具体来说，我们使用 Triton-CPU 生成的 LLVM IR，通过交叉编译生成适用于 RISC-V 平台的汇编代码。
+在x86平台执行前端
+
+在编译器方面，C 版本的算子分别使用 RISC-V GCC 15.0.0 和兆松科技的 ZCC 3.2.4（基于 LLVM 的优化编译器）编译器进行编译；Triton 算子的 LLVM IR 由 Triton-CPU 项目自带的编译器生成，随后通过 ZCC 编译器转换为 RISC-V 汇编代码。
+
+build_triton_kernel_lib()
+专门用于编译 Triton 计算内核，将 Triton Python 脚本 (.py) 转换为 .llir（LLVM IR）、.s（汇编）、.o（目标文件）。
+需要 Python 虚拟环境 (TRITON_PYTHON_VENV) 来运行 Triton 编译流程。
+
+build_driver()
+C 版本的算子
+
+Triton-CPU相比于Triton就是生成的IR有区别，最后都是用LLVM生成与硬件相关的代码
